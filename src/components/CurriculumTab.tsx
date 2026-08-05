@@ -109,50 +109,54 @@ export const CurriculumTab: React.FC<CurriculumTabProps> = ({ currentLang, onSel
                   </div>
                 </div>
 
-                {/* Sample Vocab Preview */}
-                <div className="pt-4 border-t border-purple-100 space-y-3">
-                  <span className="text-[11px] font-bold text-amber-700 flex items-center space-x-1">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                    <span>{currentLang === 'my' ? 'သင်တန်းပါ နမူနာ စကားပြော ပြန်ကြားရန်:' : 'Sample Spoken Phrase:'}</span>
-                  </span>
+                {/* Sample Vocab Preview - Only for TMM Level 1+2 and TLS Level 1+2, hidden for TLS Level 3 Advanced */}
+                {course.id !== 'advanced' && course.sampleFlashcards && course.sampleFlashcards.length > 0 && (
+                  <div className="pt-4 border-t border-purple-100 space-y-3">
+                    <span className="text-[11px] font-bold text-amber-700 flex items-center space-x-1">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                      <span>{currentLang === 'my' ? 'သင်တန်းပါ နမူနာ စကားပြော ပြန်ကြားရန်:' : 'Sample Spoken Phrase:'}</span>
+                    </span>
 
-                  {course.sampleFlashcards.slice(0, 2).map((fc, idx) => (
-                    <div key={idx} className="bg-purple-950 text-white p-3 rounded-2xl flex items-center justify-between text-xs border border-purple-900">
-                      <div className="space-y-1">
-                        <div className="font-bold text-amber-400 text-sm">{fc.thai}</div>
-                        <div className="text-[11px] text-purple-200">
-                          {fc.phonetic} {fc.myanmarPhonetic ? `(${fc.myanmarPhonetic})` : ''}
+                    {course.sampleFlashcards.slice(0, 2).map((fc, idx) => (
+                      <div key={idx} className="bg-purple-950 text-white p-3 rounded-2xl flex items-center justify-between text-xs border border-purple-900">
+                        <div className="space-y-1">
+                          <div className="font-bold text-amber-400 text-sm">{fc.thai}</div>
+                          <div className="text-[11px] text-purple-200">
+                            {fc.phonetic} {fc.myanmarPhonetic ? `(${fc.myanmarPhonetic})` : ''}
+                          </div>
+                          <div className="text-xs font-extrabold text-amber-300 flex items-center gap-1.5 pt-0.5">
+                            <span className="text-[10px] bg-amber-400/20 px-1.5 py-0.5 rounded text-amber-300 border border-amber-400/30 font-bold">
+                              {currentLang === 'my' ? 'မြန်မာအဓိပ္ပာယ်' : 'Myanmar'}
+                            </span>
+                            <span>{fc.myanmar}</span>
+                          </div>
                         </div>
-                        <div className="text-xs font-extrabold text-amber-300 flex items-center gap-1.5 pt-0.5">
-                          <span className="text-[10px] bg-amber-400/20 px-1.5 py-0.5 rounded text-amber-300 border border-amber-400/30 font-bold">
-                            {currentLang === 'my' ? 'မြန်မာအဓိပ္ပာယ်' : 'Myanmar'}
-                          </span>
-                          <span>{fc.myanmar}</span>
-                        </div>
+                        <button
+                          onClick={() => handleSpeak(fc.audioText)}
+                          title="Listen Thai Pronunciation"
+                          className={`p-2 rounded-xl transition-all cursor-pointer ${
+                            speakingText === fc.audioText ? 'bg-amber-400 text-purple-950 animate-bounce' : 'bg-purple-800 hover:bg-purple-700 text-amber-300'
+                          }`}
+                        >
+                          <Volume2 className="w-4 h-4" />
+                        </button>
                       </div>
-                      <button
-                        onClick={() => handleSpeak(fc.audioText)}
-                        title="Listen Thai Pronunciation"
-                        className={`p-2 rounded-xl transition-all cursor-pointer ${
-                          speakingText === fc.audioText ? 'bg-amber-400 text-purple-950 animate-bounce' : 'bg-purple-800 hover:bg-purple-700 text-amber-300'
-                        }`}
-                      >
-                        <Volume2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
+                    ))}
 
-                  <button
-                    onClick={() => {
-                      setSelectedCourseId(course.id);
-                      onSelectTab('practice');
-                    }}
-                    className="w-full mt-2 bg-purple-100 hover:bg-purple-200 text-purple-950 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center space-x-1.5 transition-colors cursor-pointer"
-                  >
-                    <span>{currentLang === 'my' ? 'လက်တွေ့ Flashcards & Quiz စမ်းရန်' : 'Try Flashcards & Practice'}</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
+                    <button
+                      onClick={() => {
+                        setSelectedCourseId(course.id);
+                        onSelectTab('practice');
+                      }}
+                      className="w-full mt-2 bg-purple-100 hover:bg-purple-200 text-purple-950 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center space-x-1.5 transition-colors cursor-pointer"
+                    >
+                      <span>{currentLang === 'my' ? 'လက်တွေ့ Flashcards & Quiz စမ်းရန်' : 'Try Flashcards & Practice'}</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+
+
               </motion.div>
             );
           })}
