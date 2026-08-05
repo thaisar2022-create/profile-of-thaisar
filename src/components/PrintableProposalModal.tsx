@@ -73,7 +73,7 @@ export const PrintableProposalModal: React.FC<PrintableProposalModalProps> = ({
                   "ထိုင်းစာ" ထိုင်းဘာသာစကားသင်တန်းကျောင်း
                 </h1>
                 <h2 className="text-sm font-bold text-amber-700">
-                  Thaisar Thai Language Academy
+                  Thaisar Thai Language School
                 </h2>
                 <span className="text-[11px] text-slate-500 font-medium">Hledan, Kamayut Township, Yangon</span>
               </div>
@@ -151,7 +151,7 @@ export const PrintableProposalModal: React.FC<PrintableProposalModalProps> = ({
             <div className="space-y-1 text-slate-600">
               <div className="flex items-center space-x-1.5 font-bold text-slate-900">
                 <Building className="w-3.5 h-3.5 text-purple-800" />
-                <span>Thaisar Thai Language Academy</span>
+                <span>Thaisar Thai Language School</span>
               </div>
               <div>အမှတ် (၅၃/3B)၊ အင်းစိန်လမ်းမကြီး၊ လှည်းတန်း၊ ကမာရွတ်မြို့နယ်၊ ရန်ကုန်မြို့။</div>
               <div>Hotline: Hledan Campus, Yangon</div>

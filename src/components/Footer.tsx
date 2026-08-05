@@ -24,7 +24,7 @@ export const Footer: React.FC<FooterProps> = ({ currentLang, onSelectTab }) => {
               />
               <div>
                 <span className="font-extrabold text-amber-400 text-lg block">
-                  {currentLang === 'my' ? '"ထိုင်းစာ" ထိုင်းဘာသာစကားသင်တန်းကျောင်း' : 'Thaisar Thai Language Academy'}
+                  {currentLang === 'my' ? '"ထိုင်းစာ" ထိုင်းဘာသာစကားသင်တန်းကျောင်း' : 'Thaisar Thai Language School'}
                 </span>
                 <span className="text-purple-300 text-xs">Official B2B Manpower & Agency Collaboration Profile</span>
               </div>
@@ -128,7 +128,7 @@ export const Footer: React.FC<FooterProps> = ({ currentLang, onSelectTab }) => {
 
         {/* Copyright */}
         <div className="text-center text-xs text-purple-400 space-y-1">
-          <p>© 2022-2026 Thaisar Thai Language Academy. All Rights Reserved.</p>
+          <p>© 2022-2026 Thaisar Thai Language School. All Rights Reserved.</p>
           <p className="text-purple-500 font-medium">Empowering Workforce Language Skills across Myanmar & Thailand</p>
         </div>
       </div>

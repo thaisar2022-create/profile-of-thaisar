@@ -23,10 +23,10 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ currentLang, onSelectTab
       <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
         <div className="max-w-3xl">
           <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight leading-tight mb-2">
-            {currentLang === 'my' ? '"ထိုင်းစာ" ထိုင်းဘာသာစကားသင်တန်းကျောင်း' : 'Thaisar Thai Language Academy'}
+            {currentLang === 'my' ? '"ထိုင်းစာ" ထိုင်းဘာသာစကားသင်တန်းကျောင်း' : 'Thaisar Thai Language School'}
           </h1>
           <h2 className="text-lg sm:text-2xl font-bold text-amber-400 mb-5 flex items-center space-x-2">
-            <span>Thaisar Thai Language Academy</span>
+            <span>Thaisar Thai Language School</span>
             <Sparkles className="w-5 h-5 text-amber-300 animate-spin-slow" />
           </h2>
 
@@ -65,15 +65,14 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ currentLang, onSelectTab
           transition={{ duration: 0.5 }}
           className="hidden lg:flex flex-col items-center justify-center p-6 bg-[#1e0338]/80 rounded-3xl border border-purple-700/80 shadow-2xl backdrop-blur"
         >
-          <div className="w-36 h-36 rounded-full bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 p-1 shadow-2xl animate-float">
-            <div className="w-full h-full rounded-full bg-[#2e0750] flex flex-col items-center justify-center text-amber-400 border-2 border-amber-400">
-              <span className="text-5xl font-black">ထ</span>
-              <span className="text-[10px] font-bold tracking-widest text-purple-200 mt-1 uppercase">THAISAR</span>
-            </div>
+          <div className="w-36 h-36 rounded-full bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 p-1 shadow-2xl animate-float overflow-hidden">
+            <img 
+              src="https://lh3.googleusercontent.com/pw/AP1GczMwFLSw2jZ1uvbxB1NybvU19q_q4wQ_zIyacLAw5-JekiGYYaKWpJSF0IJG_uOrfRDBSg1XUVRmPf7rcM5v69f6HeH09rHtXRPCXAc4bLjP7phKNRU=w2400" 
+              alt="Thaisar Logo" 
+              className="w-full h-full rounded-full object-cover border-2 border-amber-400"
+              referrerPolicy="no-referrer"
+            />
           </div>
-          <span className="mt-3 text-xs font-extrabold text-amber-300 uppercase tracking-widest bg-amber-400/20 px-3 py-1 rounded-full border border-amber-400/30">
-            Official Academy Seal
-          </span>
         </motion.div>
       </div>
     </div>
