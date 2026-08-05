@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Language, TabType } from '../types';
 import { translations } from '../data/translations';
-import { ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 interface HeroBannerProps {
   currentLang: Language;
@@ -22,19 +22,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ currentLang, onSelectTab
 
       <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
         <div className="max-w-3xl">
-          {/* Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center space-x-2 bg-amber-400/15 text-amber-300 border border-amber-400/30 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4 backdrop-blur-sm"
-          >
-            <ShieldCheck className="w-4 h-4 text-amber-400" />
-            <span>
-              {currentLang === 'my' ? translations.hero.badgeMy : translations.hero.badgeEn}
-            </span>
-          </motion.div>
-
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight leading-tight mb-2">
             {currentLang === 'my' ? '"ထိုင်းစာ" ထိုင်းဘာသာစကားသင်တန်းကျောင်း' : 'Thaisar Thai Language Academy'}
           </h1>
           <h2 className="text-lg sm:text-2xl font-bold text-amber-400 mb-5 flex items-center space-x-2">
