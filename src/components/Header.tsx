@@ -76,17 +76,17 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onSelectTab('overview')} 
             className="flex items-center space-x-3 cursor-pointer group"
           >
-            <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-full p-0.5 bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 shadow-md flex-shrink-0 transition-transform group-hover:scale-105">
-              <div className="w-full h-full rounded-full bg-[#3b0764] flex items-center justify-center font-black text-amber-400 text-xl sm:text-2xl border border-amber-400/80 shadow-inner">
-                ထ
-              </div>
+            <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-full p-0.5 bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 shadow-md flex-shrink-0 transition-transform group-hover:scale-105 overflow-hidden">
+              <img 
+                src="https://lh3.googleusercontent.com/pw/AP1GczMwFLSw2jZ1uvbxB1NybvU19q_q4wQ_zIyacLAw5-JekiGYYaKWpJSF0IJG_uOrfRDBSg1XUVRmPf7rcM5v69f6HeH09rHtXRPCXAc4bLjP7phKNRU=w2400" 
+                alt="Thaisar Logo" 
+                className="w-full h-full rounded-full object-cover border border-amber-400/80"
+                referrerPolicy="no-referrer"
+              />
             </div>
             <div>
               <div className="font-black text-lg sm:text-2xl tracking-tight text-amber-400 flex items-center space-x-1">
                 <span>THAISAR</span>
-                <span className="text-xs bg-amber-400/20 text-amber-300 font-semibold px-2 py-0.5 rounded-full border border-amber-400/30 ml-2 hidden sm:inline-block">
-                  Academy
-                </span>
               </div>
               <div className="text-xs text-purple-200 font-medium hidden sm:block">
                 {currentLang === 'my' ? translations.header.subtitleMy : translations.header.subtitleEn}
@@ -121,17 +121,6 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>English</span>
               </button>
             </div>
-
-            {/* Print / Export PDF Button */}
-            <button
-              onClick={onOpenPrintModal}
-              className="bg-amber-400 hover:bg-amber-300 text-purple-950 font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm flex items-center space-x-2 transition-all shadow-lg hover:shadow-amber-400/20 active:scale-95"
-            >
-              <Printer className="w-4 h-4" />
-              <span className="hidden sm:inline">
-                {currentLang === 'my' ? translations.header.printBtnMy : translations.header.printBtnEn}
-              </span>
-            </button>
           </div>
         </div>
       </div>

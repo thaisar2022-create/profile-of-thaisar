@@ -62,9 +62,12 @@ export const PrintableProposalModal: React.FC<PrintableProposalModalProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between pb-6 border-b-2 border-purple-950">
             <div className="flex items-center space-x-4">
-              <div className="w-14 h-14 rounded-full bg-[#2e0750] text-amber-400 flex items-center justify-center font-black text-2xl border-2 border-amber-400 shadow-md">
-                ထ
-              </div>
+              <img 
+                src="https://lh3.googleusercontent.com/pw/AP1GczMwFLSw2jZ1uvbxB1NybvU19q_q4wQ_zIyacLAw5-JekiGYYaKWpJSF0IJG_uOrfRDBSg1XUVRmPf7rcM5v69f6HeH09rHtXRPCXAc4bLjP7phKNRU=w2400" 
+                alt="Thaisar Logo" 
+                className="w-14 h-14 rounded-full object-cover border-2 border-amber-400 shadow-md flex-shrink-0"
+                referrerPolicy="no-referrer"
+              />
               <div>
                 <h1 className="text-xl sm:text-2xl font-black text-purple-950 tracking-tight">
                   "ထိုင်းစာ" ထိုင်းဘာသာစကားသင်တန်းကျောင်း

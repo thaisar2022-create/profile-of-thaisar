@@ -16,9 +16,12 @@ export const Footer: React.FC<FooterProps> = ({ currentLang, onSelectTab }) => {
           {/* Col 1: Brand */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-[#3b0764] text-amber-400 font-black text-xl flex items-center justify-center border border-amber-400">
-                ထ
-              </div>
+              <img 
+                src="https://lh3.googleusercontent.com/pw/AP1GczMwFLSw2jZ1uvbxB1NybvU19q_q4wQ_zIyacLAw5-JekiGYYaKWpJSF0IJG_uOrfRDBSg1XUVRmPf7rcM5v69f6HeH09rHtXRPCXAc4bLjP7phKNRU=w2400" 
+                alt="Thaisar Logo" 
+                className="w-10 h-10 rounded-full object-cover border border-amber-400 flex-shrink-0"
+                referrerPolicy="no-referrer"
+              />
               <div>
                 <span className="font-extrabold text-amber-400 text-lg block">
                   {currentLang === 'my' ? '"ထိုင်းစာ" ထိုင်းဘာသာစကားသင်တန်းကျောင်း' : 'Thaisar Thai Language Academy'}

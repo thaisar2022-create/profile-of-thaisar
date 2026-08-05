@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Language, TabType } from '../types';
 import { translations } from '../data/translations';
-import { ShieldCheck, Calendar, Users, GraduationCap, MonitorPlay, ArrowRight, Sparkles } from 'lucide-react';
+import { ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
 
 interface HeroBannerProps {
   currentLang: Language;
@@ -87,41 +87,6 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ currentLang, onSelectTab
             Official Academy Seal
           </span>
         </motion.div>
-      </div>
-
-      {/* Quick Metrics Header Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-8 pt-6 border-t border-purple-800/80">
-        <div className="bg-[#1e0338]/80 p-3.5 rounded-2xl border border-purple-800/80 hover:border-amber-400/40 transition-colors">
-          <div className="text-xs text-purple-300 font-medium flex items-center space-x-1.5">
-            <Calendar className="w-3.5 h-3.5 text-amber-400" />
-            <span>{currentLang === 'my' ? translations.hero.establishedMy : translations.hero.establishedEn}</span>
-          </div>
-          <div className="text-sm sm:text-base font-extrabold text-white mt-1">22 Feb 2022</div>
-        </div>
-
-        <div className="bg-[#1e0338]/80 p-3.5 rounded-2xl border border-purple-800/80 hover:border-amber-400/40 transition-colors">
-          <div className="text-xs text-purple-300 font-medium flex items-center space-x-1.5">
-            <Users className="w-3.5 h-3.5 text-amber-400" />
-            <span>{currentLang === 'my' ? translations.hero.alumniMy : translations.hero.alumniEn}</span>
-          </div>
-          <div className="text-sm sm:text-base font-extrabold text-amber-400 mt-1">5,000+ Students</div>
-        </div>
-
-        <div className="bg-[#1e0338]/80 p-3.5 rounded-2xl border border-purple-800/80 hover:border-amber-400/40 transition-colors">
-          <div className="text-xs text-purple-300 font-medium flex items-center space-x-1.5">
-            <GraduationCap className="w-3.5 h-3.5 text-emerald-400" />
-            <span>{currentLang === 'my' ? translations.hero.batchesMy : translations.hero.batchesEn}</span>
-          </div>
-          <div className="text-sm sm:text-base font-extrabold text-emerald-400 mt-1">170+ Batches</div>
-        </div>
-
-        <div className="bg-[#1e0338]/80 p-3.5 rounded-2xl border border-purple-800/80 hover:border-amber-400/40 transition-colors">
-          <div className="text-xs text-purple-300 font-medium flex items-center space-x-1.5">
-            <MonitorPlay className="w-3.5 h-3.5 text-sky-400" />
-            <span>{currentLang === 'my' ? translations.hero.modesMy : translations.hero.modesEn}</span>
-          </div>
-          <div className="text-sm sm:text-base font-extrabold text-sky-300 mt-1">Campus • Zoom • Video</div>
-        </div>
       </div>
     </div>
   );

@@ -274,19 +274,6 @@ export const allFlashcards: Flashcard[] = [
     ]
   },
   {
-    id: 'fc-alpha-2',
-    thai: 'ข (ข ไข่)',
-    phonetic: 'Khor Khai',
-    myanmarPhonetic: 'ခေါ ခိုင်',
-    myanmar: 'ခ - ကြက်ဥ (ထိုင်းဗျည်း အမှတ် ၂)',
-    english: 'Kh - Egg (2nd Thai Consonant)',
-    category: 'alphabet',
-    wordBreakdown: [
-      { thai: 'ข', phonetic: 'Khor', myanmar: 'ခ (ဗျည်း)' },
-      { thai: 'ไข่', phonetic: 'Khai', myanmar: 'ကြက်ဥ' }
-    ]
-  },
-  {
     id: 'fc-alpha-3',
     thai: 'ค (ค ควาย)',
     phonetic: 'Khor Khway',

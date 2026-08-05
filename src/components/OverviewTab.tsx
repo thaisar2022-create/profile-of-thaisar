@@ -233,26 +233,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ currentLang }) => {
             </div>
           </div>
 
-          {/* Interactive Direction Guide Card */}
-          <div className="bg-gradient-to-r from-[#2e0750] to-[#3b0764] text-white p-6 rounded-3xl border border-purple-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2 text-amber-400 font-bold text-sm">
-                <Navigation className="w-4 h-4" />
-                <span>{currentLang === 'my' ? 'လှည်းတန်းကျောင်းလမ်းညွှန်' : 'Hledan Campus Direction Guide'}</span>
-              </div>
-              <p className="text-xs text-purple-200 leading-relaxed max-w-xl">
-                {currentLang === 'my'
-                  ? 'လှည်းတန်းမှတ်တိုင်တွင်ဆင်း၍ ကိန္ဒရီ Phone Accessories ဆိုင်နှစ်ခုကြားရှိ လှေကားမှ ဒုတိယထပ်သို့ တက်ရောက်နိုင်ပါသည်။'
-                  : 'Get off at Hledan Bus Stop. Walk to Kindari Phone Accessory shops and take the stairs up to 2nd Floor.'}
-              </p>
-            </div>
-            <button
-              onClick={handleCopyAddress}
-              className="bg-amber-400 hover:bg-amber-300 text-purple-950 font-bold px-4 py-2.5 rounded-xl text-xs flex-shrink-0 transition-all cursor-pointer"
-            >
-              {copiedAddress ? (currentLang === 'my' ? 'ကူးယူပြီးပါပြီ ✓' : 'Copied ✓') : (currentLang === 'my' ? 'လိပ်စာကူးယူရန်' : 'Copy Campus Address')}
-            </button>
-          </div>
+
         </div>
       </div>
     </motion.div>
