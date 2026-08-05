@@ -1,0 +1,6 @@
+{
+  "name": "Thaisar Thai Language Academy",
+  "description": "Interactive B2B & Agency Profile, Course Directory, Proposal Fee Calculator, and Animated Thai Language Learning Platform.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
