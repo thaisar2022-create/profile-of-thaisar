@@ -19,6 +19,7 @@ interface HeaderProps {
   activeTab: TabType;
   onSelectTab: (tab: TabType) => void;
   onOpenPrintModal: () => void;
+  onPreloadTab?: (tab: TabType | 'modal') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -26,7 +27,8 @@ export const Header: React.FC<HeaderProps> = ({
   onSetLanguage,
   activeTab,
   onSelectTab,
-  onOpenPrintModal
+  onOpenPrintModal,
+  onPreloadTab
 }) => {
   const tabs = [
     {
@@ -92,6 +94,7 @@ export const Header: React.FC<HeaderProps> = ({
                 alt="Thaisar Logo" 
                 className="w-full h-full rounded-full object-cover border border-amber-400/80"
                 referrerPolicy="no-referrer"
+                fetchPriority="high"
               />
             </div>
             <div>
@@ -168,19 +171,31 @@ export const Header: React.FC<HeaderProps> = ({
                 aria-controls={`tabpanel-${tab.id}`}
                 tabIndex={isActive ? 0 : -1}
                 onClick={() => onSelectTab(tab.id)}
+                onMouseEnter={() => onPreloadTab?.(tab.id)}
+                onTouchStart={() => onPreloadTab?.(tab.id)}
+                onFocus={() => onPreloadTab?.(tab.id)}
                 onKeyDown={(e) => {
-                  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                  if (['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) {
                     e.preventDefault();
                     const currentIndex = tabs.findIndex(t => t.id === tab.id);
-                    const nextIndex = e.key === 'ArrowRight'
-                      ? (currentIndex + 1) % tabs.length
-                      : (currentIndex - 1 + tabs.length) % tabs.length;
-                    onSelectTab(tabs[nextIndex].id);
-                    const nextTabEl = document.getElementById(`tab-${tabs[nextIndex].id}`);
-                    nextTabEl?.focus();
+                    let nextIndex = currentIndex;
+                    if (e.key === 'ArrowRight') {
+                      nextIndex = (currentIndex + 1) % tabs.length;
+                    } else if (e.key === 'ArrowLeft') {
+                      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                    } else if (e.key === 'Home') {
+                      nextIndex = 0;
+                    } else if (e.key === 'End') {
+                      nextIndex = tabs.length - 1;
+                    }
+                    const nextTab = tabs[nextIndex];
+                    onSelectTab(nextTab.id);
+                    setTimeout(() => {
+                      document.getElementById(`tab-${nextTab.id}`)?.focus();
+                    }, 0);
                   }
                 }}
-                className={`relative py-3 px-3 sm:px-4 flex items-center space-x-2 transition-colors rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+                className={`relative py-2.5 px-3 sm:px-4 min-h-[44px] min-w-[44px] flex items-center justify-center space-x-2 transition-colors rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                   isActive
                     ? 'text-amber-300 font-bold'
                     : 'text-purple-300 hover:text-amber-200 hover:bg-purple-900/30'

@@ -16,11 +16,76 @@ const ProposalTab = React.lazy(() => import('./components/ProposalTab').then(m =
 const InteractivePracticeTab = React.lazy(() => import('./components/InteractivePracticeTab').then(m => ({ default: m.InteractivePracticeTab })));
 const PrintableProposalModal = React.lazy(() => import('./components/PrintableProposalModal').then(m => ({ default: m.PrintableProposalModal })));
 
+// Loader functions for preloading lazy chunks
+const tabLoaders: Record<TabType, () => Promise<unknown>> = {
+  overview: () => import('./components/OverviewTab'),
+  curriculum: () => import('./components/CurriculumTab'),
+  benefits: () => import('./components/BenefitsTab'),
+  milestones: () => import('./components/MilestonesTab'),
+  proposal: () => import('./components/ProposalTab'),
+  practice: () => import('./components/InteractivePracticeTab'),
+};
+
+const loadPrintModal = () => import('./components/PrintableProposalModal');
+
 export default function App() {
   const [currentLang, setCurrentLang] = useState<Language>('my');
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [isPrintModalOpen, setIsPrintModalOpen] = useState<boolean>(false);
   const [customProposalData, setCustomProposalData] = useState<ProposalCalculation | null>(null);
+
+  // Ref to track preloaded components to prevent duplicate prefetch calls
+  const prefetchedTabs = React.useRef<Set<string>>(new Set());
+
+  const preloadTab = React.useCallback((tab: TabType | 'modal') => {
+    if (prefetchedTabs.current.has(tab)) return;
+    prefetchedTabs.current.add(tab);
+    if (tab === 'modal') {
+      loadPrintModal();
+    } else if (tabLoaders[tab]) {
+      tabLoaders[tab]();
+    }
+  }, []);
+
+  // Preload non-active lazy tab components during browser idle time
+  useEffect(() => {
+    const idleCallback = (window as unknown as { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback;
+    const cancelIdleCallback = (window as unknown as { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback;
+
+    let timerId: number | ReturnType<typeof setTimeout>;
+
+    const runIdlePrefetch = () => {
+      const tabsToPreload: (TabType | 'modal')[] = [
+        'overview',
+        'curriculum',
+        'benefits',
+        'milestones',
+        'proposal',
+        'practice',
+        'modal'
+      ];
+
+      tabsToPreload.forEach((tab) => {
+        if (tab !== activeTab) {
+          preloadTab(tab);
+        }
+      });
+    };
+
+    if (typeof idleCallback === 'function') {
+      timerId = idleCallback(runIdlePrefetch, { timeout: 2000 });
+    } else {
+      timerId = setTimeout(runIdlePrefetch, 1000);
+    }
+
+    return () => {
+      if (typeof idleCallback === 'function' && typeof cancelIdleCallback === 'function') {
+        cancelIdleCallback(timerId as number);
+      } else {
+        clearTimeout(timerId as ReturnType<typeof setTimeout>);
+      }
+    };
+  }, [activeTab, preloadTab]);
 
   // Dynamic Metadata Hook for SEO and OpenGraph updates
   useEffect(() => {
@@ -117,6 +182,7 @@ export default function App() {
         activeTab={activeTab}
         onSelectTab={setActiveTab}
         onOpenPrintModal={handleOpenGeneralPrintModal}
+        onPreloadTab={preloadTab}
       />
 
       {/* Main Content Area */}
