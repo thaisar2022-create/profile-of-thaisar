@@ -27,7 +27,7 @@ export interface CourseProgram {
 
 export interface ProposalCalculation {
   qty: number;
-  courseId: 'tmm' | 'tls';
+  courseId: 'tmm' | 'tls' | 'one_on_one' | 'agency_collab';
   mode: 'zoom' | 'campus';
   standardFee: number;
   specialFee: number;

@@ -25,7 +25,7 @@ export const ProposalTab: React.FC<ProposalTabProps> = ({
   onOpenPrintModalWithData 
 }) => {
   const [qty, setQty] = useState<number>(10);
-  const [courseId, setCourseId] = useState<'tmm' | 'tls'>('tmm');
+  const [courseId, setCourseId] = useState<'tmm' | 'tls' | 'one_on_one' | 'agency_collab'>('tmm');
   const [mode, setMode] = useState<'zoom' | 'campus'>('zoom');
 
   // Rules compliance checklist state
@@ -48,8 +48,7 @@ export const ProposalTab: React.FC<ProposalTabProps> = ({
       standardFee = 12500000;
       specialFee = 8000000;
     }
-  } else {
-    // TLS Course
+  } else if (courseId === 'tls') {
     if (qty <= 10) {
       standardFee = 6000000;
       specialFee = 4000000;
@@ -59,6 +58,30 @@ export const ProposalTab: React.FC<ProposalTabProps> = ({
     } else {
       standardFee = 25000000;
       specialFee = 15000000;
+    }
+  } else if (courseId === 'one_on_one') {
+    // 3. One on One Special Class
+    if (qty <= 10) {
+      standardFee = 8000000;
+      specialFee = 5000000;
+    } else if (qty <= 20) {
+      standardFee = 15000000;
+      specialFee = 9500000;
+    } else {
+      standardFee = 32000000;
+      specialFee = 20000000;
+    }
+  } else if (courseId === 'agency_collab') {
+    // 4. Special Collaboration Class with Agency
+    if (qty <= 10) {
+      standardFee = 7500000;
+      specialFee = 5000000;
+    } else if (qty <= 20) {
+      standardFee = 13500000;
+      specialFee = 8500000;
+    } else {
+      standardFee = 30000000;
+      specialFee = 18000000;
     }
   }
 
@@ -139,11 +162,13 @@ export const ProposalTab: React.FC<ProposalTabProps> = ({
               </label>
               <select
                 value={courseId}
-                onChange={(e) => setCourseId(e.target.value as 'tmm' | 'tls')}
+                onChange={(e) => setCourseId(e.target.value as 'tmm' | 'tls' | 'one_on_one' | 'agency_collab')}
                 className="w-full bg-white border-2 border-purple-200 rounded-2xl p-3 text-xs sm:text-sm font-extrabold text-slate-900 focus:outline-none focus:border-purple-700 shadow-sm"
               >
-                <option value="tmm">1. TMM Class - Zoom Face to Face (၃၀ နာရီ / 2 Months)</option>
-                <option value="tls">2. TLS Class - Zoom Face to Face (၅၀ နာရီ / 4 Months)</option>
+                <option value="tmm">{currentLang === 'my' ? translations.proposal.courseTMMMy : translations.proposal.courseTMMEn}</option>
+                <option value="tls">{currentLang === 'my' ? translations.proposal.courseTLSMy : translations.proposal.courseTLSEn}</option>
+                <option value="one_on_one">{currentLang === 'my' ? translations.proposal.courseOneOnOneMy : translations.proposal.courseOneOnOneEn}</option>
+                <option value="agency_collab">{currentLang === 'my' ? translations.proposal.courseAgencyCollabMy : translations.proposal.courseAgencyCollabEn}</option>
               </select>
             </div>
 
@@ -188,7 +213,10 @@ export const ProposalTab: React.FC<ProposalTabProps> = ({
                     <span>{currentLang === 'my' ? translations.proposal.summaryTitleMy : translations.proposal.summaryTitleEn}</span>
                   </span>
                   <h4 className="text-lg sm:text-xl font-extrabold text-white mt-1">
-                    {courseId === 'tmm' ? 'TMM Speaking Specialist Package' : 'TLS 4-Skills Standard Package'}
+                    {courseId === 'tmm' && 'TMM Speaking Specialist Package'}
+                    {courseId === 'tls' && 'TLS 4-Skills Standard Package'}
+                    {courseId === 'one_on_one' && (currentLang === 'my' ? '1-on-1 VIP Coaching Special Package' : '1-on-1 VIP Coaching Special Package')}
+                    {courseId === 'agency_collab' && (currentLang === 'my' ? 'Special Agency Collaboration Exclusive Batch' : 'Special Agency Collaboration Exclusive Batch')}
                   </h4>
                 </div>
                 <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
@@ -205,7 +233,10 @@ export const ProposalTab: React.FC<ProposalTabProps> = ({
                 <li className="flex justify-between py-1.5 border-b border-purple-800/80">
                   <span className="text-purple-300">{currentLang === 'my' ? translations.proposal.selectedCourseMy : translations.proposal.selectedCourseEn}</span>
                   <span className="font-extrabold text-amber-300">
-                    {courseId === 'tmm' ? 'TMM Class (Zoom - ၃၀ နာရီ)' : 'TLS Class (Zoom - ၅၀ နာရီ)'}
+                    {courseId === 'tmm' && 'TMM Class (Zoom - ၃၀ နာရီ)'}
+                    {courseId === 'tls' && 'TLS Class (Zoom - ၅၀ နာရီ)'}
+                    {courseId === 'one_on_one' && (currentLang === 'my' ? 'One on One Special Class (၁ ချင်းစီ သီးသန့်)' : 'One on One Special Class (Private)')}
+                    {courseId === 'agency_collab' && (currentLang === 'my' ? 'Special Collaboration Class with Agency (အေဂျင်စီ သီးသန့်)' : 'Special Collaboration Class with Agency')}
                   </span>
                 </li>
 
@@ -260,6 +291,8 @@ export const ProposalTab: React.FC<ProposalTabProps> = ({
           </div>
         </div>
       </div>
+
+
 
       {/* 100% Money-Back Guarantee & 3 Rules Policy Box */}
       <div className="bg-gradient-to-r from-[#2e0750] via-[#3b0764] to-[#2e0750] text-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-amber-400">
@@ -419,7 +452,7 @@ export const ProposalTab: React.FC<ProposalTabProps> = ({
                 <td className="p-4 font-black text-purple-950 bg-amber-50/80">၇,၀၀၀,၀၀၀/- ကျပ်</td>
                 <td className="p-4 font-bold text-emerald-600">၄,၀၀၀,၀၀၀/- ကျပ်</td>
               </tr>
-              <tr className={`hover:bg-purple-50 transition-colors ${courseId === 'tls' && qty > 20 ? 'bg-amber-100/60 font-bold' : ''}`}>
+              <tr className={`hover:bg-purple-50 transition-colors border-b-2 border-purple-200 ${courseId === 'tls' && qty > 20 ? 'bg-amber-100/60 font-bold' : ''}`}>
                 <td className="p-4">ကျောင်းသား ၅၀ ယောက်အထိ</td>
                 <td className="p-4 text-slate-400 line-through">၂၅,၀၀၀,၀၀၀/- ကျပ်</td>
                 <td className="p-4 font-black text-purple-950 bg-amber-50/80">၁၅,၀၀၀,၀၀၀/- ကျပ်</td>
@@ -435,3 +468,4 @@ export const ProposalTab: React.FC<ProposalTabProps> = ({
     </motion.div>
   );
 };
+

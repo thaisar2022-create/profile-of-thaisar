@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Language, ProposalCalculation } from '../types';
-import { translations } from '../data/translations';
-import { X, Printer, ShieldCheck, CheckCircle2, Building, Phone, MapPin } from 'lucide-react';
+import { X, Printer, ShieldCheck, Building } from 'lucide-react';
 
 interface PrintableProposalModalProps {
   currentLang: Language;
@@ -14,6 +13,61 @@ export const PrintableProposalModal: React.FC<PrintableProposalModalProps> = ({
   proposalData,
   onClose
 }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Focus trap and Escape key listener
+  useEffect(() => {
+    const previousActiveElement = document.activeElement as HTMLElement | null;
+    const modalEl = modalRef.current;
+    const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    if (modalEl) {
+      const focusables = modalEl.querySelectorAll<HTMLElement>(focusableSelector);
+      if (focusables.length > 0) {
+        focusables[0].focus();
+      } else {
+        modalEl.focus();
+      }
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (e.key === 'Tab' && modalEl) {
+        const focusables = Array.from(modalEl.querySelectorAll<HTMLElement>(focusableSelector));
+        if (focusables.length === 0) return;
+
+        const firstEl = focusables[0];
+        const lastEl = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          }
+        } else {
+          if (document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
+        previousActiveElement.focus();
+      }
+    };
+  }, [onClose]);
+
   const formatMMK = (num: number) => num.toLocaleString('en-US') + '/- ကျပ်';
 
   const defaultData: ProposalCalculation = {
@@ -32,27 +86,50 @@ export const PrintableProposalModal: React.FC<PrintableProposalModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white text-slate-900 rounded-3xl max-w-3xl w-full p-6 sm:p-10 shadow-2xl relative border border-purple-200 my-8">
+    <div 
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+    >
+      <div 
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="printable-modal-title"
+        aria-describedby="printable-modal-desc"
+        tabIndex={-1}
+        className="bg-white text-slate-900 rounded-3xl max-w-3xl w-full p-6 sm:p-10 shadow-2xl relative border border-purple-200 my-8 focus:outline-none"
+      >
+        <p id="printable-modal-desc" className="sr-only">
+          Official B2B proposal document and pricing breakdown for agency workforce language training.
+        </p>
+
         {/* Controls header in Modal */}
         <div className="flex items-center justify-between pb-4 border-b border-purple-100 no-print mb-6">
           <div className="flex items-center space-x-2 text-purple-950 font-bold text-sm">
-            <Printer className="w-5 h-5 text-purple-800" />
+            <Printer className="w-5 h-5 text-purple-800" aria-hidden="true" />
             <span>Official B2B Proposal Document Preview</span>
           </div>
           <div className="flex items-center space-x-3">
             <button
+              type="button"
               onClick={handlePrint}
-              className="bg-amber-400 hover:bg-amber-300 text-purple-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 transition-colors cursor-pointer shadow-md"
+              aria-label="Print or save PDF document"
+              className="bg-amber-400 hover:bg-amber-300 text-purple-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 transition-colors cursor-pointer shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-900"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-4 h-4" aria-hidden="true" />
               <span>Print / Save PDF</span>
             </button>
             <button
+              type="button"
               onClick={onClose}
-              className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-colors cursor-pointer"
+              aria-label={currentLang === 'my' ? 'ပိတ်မည်' : 'Close modal'}
+              className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-900"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -69,7 +146,7 @@ export const PrintableProposalModal: React.FC<PrintableProposalModalProps> = ({
                 referrerPolicy="no-referrer"
               />
               <div>
-                <h1 className="text-xl sm:text-2xl font-black text-purple-950 tracking-tight">
+                <h1 id="printable-modal-title" className="text-xl sm:text-2xl font-black text-purple-950 tracking-tight">
                   "ထိုင်းစာ" ထိုင်းဘာသာစကားသင်တန်းကျောင်း
                 </h1>
                 <h2 className="text-sm font-bold text-amber-700">
@@ -111,7 +188,10 @@ export const PrintableProposalModal: React.FC<PrintableProposalModalProps> = ({
               <div className="flex justify-between py-1">
                 <span className="font-semibold text-slate-600">Selected Program:</span>
                 <span className="font-extrabold text-purple-900">
-                  {data.courseId === 'tmm' ? 'TMM Speaking Specialist (30 Hours / 2 Months)' : 'TLS 4-Skills Standard (50 Hours / 4 Months)'}
+                  {data.courseId === 'tmm' && 'TMM Speaking Specialist (30 Hours / 2 Months)'}
+                  {data.courseId === 'tls' && 'TLS 4-Skills Standard (50 Hours / 4 Months)'}
+                  {data.courseId === 'one_on_one' && 'One on One Special Class (၁ ချင်းစီ သီးသန့် အထူးတန်း)'}
+                  {data.courseId === 'agency_collab' && 'Special Collaboration Class with Agency (အေဂျင်စီ သီးသန့် ပူးပေါင်းအထူးတန်း)'}
                 </span>
               </div>
               <div className="flex justify-between py-1">
@@ -138,7 +218,7 @@ export const PrintableProposalModal: React.FC<PrintableProposalModalProps> = ({
           {/* Money Back Guarantee Clause */}
           <div className="bg-purple-950 text-white p-4 rounded-2xl border border-purple-800 space-y-2 text-xs">
             <div className="flex items-center space-x-2 text-amber-400 font-bold">
-              <ShieldCheck className="w-4 h-4 text-amber-400" />
+              <ShieldCheck className="w-4 h-4 text-amber-400" aria-hidden="true" />
               <span>100% Official Money-Back Guarantee Clause</span>
             </div>
             <p className="text-purple-200 leading-relaxed text-[11px]">
@@ -150,7 +230,7 @@ export const PrintableProposalModal: React.FC<PrintableProposalModalProps> = ({
           <div className="pt-6 border-t border-purple-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <div className="space-y-1 text-slate-600">
               <div className="flex items-center space-x-1.5 font-bold text-slate-900">
-                <Building className="w-3.5 h-3.5 text-purple-800" />
+                <Building className="w-3.5 h-3.5 text-purple-800" aria-hidden="true" />
                 <span>Thaisar Thai Language School</span>
               </div>
               <div>အမှတ် (၅၃/3B)၊ အင်းစိန်လမ်းမကြီး၊ လှည်းတန်း၊ ကမာရွတ်မြို့နယ်၊ ရန်ကုန်မြို့။</div>

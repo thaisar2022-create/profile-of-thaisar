@@ -152,6 +152,86 @@ export const coursePrograms: CourseProgram[] = [
         audioText: 'ส่งรายงานให้แล้วครับ'
       }
     ]
+  },
+  {
+    id: 'one_on_one',
+    code: 'VIP Private',
+    titleMy: '4. One on One Special Class (၁ ချင်းစီ သီးသန့် အထူးတန်း)',
+    titleEn: '4. One on One Special Class (Private VIP Coaching)',
+    hours: 30,
+    durationMy: 'ချိန်ညှိနိုင်သော စာသင်ချိန်',
+    durationEn: 'Custom Flexible Schedule',
+    descMy: 'အေဂျင်စီ၏ အရေးကြီးသော သင်တန်းသားများ၊ တာဝန်ရှိသူများ သို့မဟုတ် အမြန်တတ်မြောက်လိုသူများအတွက် ဆရာမနှင့် ၁ ချင်းစီ သီးသန့် စာတွေ့/နှုတ်တွေ့ အထူးလေ့ကျင့်ပေးသော စနစ်ဖြစ်ပါသည်။',
+    descEn: 'Exclusive 1-on-1 private coaching with senior Thai instructors tailored for VIP candidates or key agency leaders needing rapid language proficiency.',
+    badgeColor: 'bg-amber-500 text-purple-950 font-black',
+    featuresMy: [
+      'ဆရာမနှင့် တိုက်ရိုက် ၁ ချင်းစီ ချိန်ညှိနိုင်သော သီးသန့် အချိန်ဇယား',
+      'စကားပြော အသံထွက် နှင့် Interview သီးသန့် အဓိက လေ့ကျင့်မှု',
+      'တစ်ဦးချင်းစီ၏ တိုးတက်မှုကို အေဂျင်စီထံ အပတ်စဉ် သီးသန့် Report ပို့ပေးခြင်း',
+      '၁ ချင်းစီ သီးသန့် VIP Certificate ပေးအပ်ခြင်း'
+    ],
+    featuresEn: [
+      'Flexible custom 1-on-1 time schedule with instructor',
+      'Intensive pronunciation & Interview-focused drills',
+      'Weekly individual progress diagnostic report for Agency HR',
+      'Exclusive VIP Certificate upon completion'
+    ],
+    sampleFlashcards: [
+      {
+        thai: 'สัมภาษณ์งานพร้อมครับ',
+        phonetic: 'Sam phat ngan prom krub',
+        myanmar: 'အလုပ် အင်တာဗျူးရန် အဆင်သင့်ဖြစ်ပါပြီ',
+        english: 'Ready for job interview',
+        audioText: 'สัมภาษณ์งานพร้อมครับ'
+      },
+      {
+        thai: 'ตั้งใจลุยครับ',
+        phonetic: 'Tang jai lui krub',
+        myanmar: 'အကောင်းဆုံး ကြိုးစားပါမည်',
+        english: 'Will do my best',
+        audioText: 'ตั้งใจลุยครับ'
+      }
+    ]
+  },
+  {
+    id: 'agency_collab',
+    code: 'Agency Collab',
+    titleMy: '5. Special Collaboration Class with Agency (အေဂျင်စီ သီးသန့် ပူးပေါင်းအထူးတန်း)',
+    titleEn: '5. Special Collaboration Class with Agency (Exclusive Agency Batch)',
+    hours: 50,
+    durationMy: 'အေဂျင်စီ စိတ်ကြိုက် ဇယား',
+    durationEn: 'Custom Agency Schedule',
+    descMy: 'အေဂျင်စီတစ်ခုတည်း၏ စေလွှတ်မည့် လုပ်သားအုပ်စုများအတွက်သာ သီးသန့် Batch ခွဲ၍ စက်ရုံ/လုပ်ငန်းခွင် အမျိုးအစားအလိုက် Custom သင်ရိုးညွှန်းတမ်းဖြင့် သင်ကြားပေးသော ပူးပေါင်းစနစ်ဖြစ်ပါသည်။',
+    descEn: 'Custom co-branded batch training isolated exclusively for your agency’s candidate pools, with tailored vocabulary for specific Thai industry sectors.',
+    badgeColor: 'bg-purple-900 text-amber-300 font-black border border-amber-400',
+    featuresMy: [
+      'ပြင်ပကျောင်းသားမပါဘဲ အေဂျင်စီ၏ သင်တန်းသားများ သီးသန့် အုပ်စုဖွဲ့ သင်ကြားခြင်း',
+      'စေလွှတ်မည့် စက်ရုံ/လုပ်ငန်းခွင်အလိုက် သီးသန့် စကားပြောသင်ရိုး ပေါင်းစပ်ပေးခြင်း',
+      'အေဂျင်စီ logo ပါဝင်သော တက်ရောက်မှုစနစ် နှင့် တရားဝင် သင်တန်းဆင်းလက်မှတ်',
+      'အေဂျင်စီ HR သို့ အပတ်စဉ် သင်တန်းသားများ၏ တက်ရောက်မှု/တိုးတက်မှု analytics ပို့ပေးခြင်း'
+    ],
+    featuresEn: [
+      'Exclusive batch isolation with no outside students',
+      'Custom vocabulary tailored to destination factory type',
+      'Co-branded certificates & attendance tracking system',
+      'Weekly attendance & performance analytics sent to Agency HR'
+    ],
+    sampleFlashcards: [
+      {
+        thai: 'กฎความปลอดภัยโรงงาน',
+        phonetic: 'Kot khuam plot phai rong ngan',
+        myanmar: 'စက်ရုံ ဘေးကင်းလုံခြုံရေး စည်းကမ်းများ',
+        english: 'Factory safety regulations',
+        audioText: 'กฎความปลอดภัยโรงงาน'
+      },
+      {
+        thai: 'พร้อมเริ่มงานครับ',
+        phonetic: 'Prom ream ngan krub',
+        myanmar: 'အလုပ်စတင်ရန် အသင့်ဖြစ်ပါပြီ',
+        english: 'Ready to start work',
+        audioText: 'พร้อมเริ่มงานครับ'
+      }
+    ]
   }
 ];
 

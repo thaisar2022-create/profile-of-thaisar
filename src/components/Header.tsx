@@ -69,12 +69,22 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="bg-[#2e0750] text-white sticky top-0 z-50 shadow-xl no-print border-b border-purple-900/60">
+      {/* Accessibility Skip Link */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:bg-amber-400 focus:text-purple-950 focus:font-extrabold focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-purple-950"
+      >
+        {currentLang === 'my' ? 'ပင်မ အကြောင်းအရာသို့ တိုက်ရိုက်သွားရန်' : 'Skip to main content'}
+      </a>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Brand Logo & Name */}
-          <div 
+          <button 
+            type="button"
             onClick={() => onSelectTab('overview')} 
-            className="flex items-center space-x-3 cursor-pointer group"
+            className="flex items-center space-x-3 cursor-pointer group text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded-2xl p-1"
+            aria-label={currentLang === 'my' ? 'ထိုင်းစာ မူလစာမျက်နှာသို့ သွားရန်' : 'Thaisar Home - Go to overview'}
           >
             <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-full p-0.5 bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 shadow-md flex-shrink-0 transition-transform group-hover:scale-105 overflow-hidden">
               <img 
@@ -92,32 +102,42 @@ export const Header: React.FC<HeaderProps> = ({
                 {currentLang === 'my' ? translations.header.subtitleMy : translations.header.subtitleEn}
               </div>
             </div>
-          </div>
+          </button>
 
           {/* Controls & Language Switcher */}
           <div className="flex items-center space-x-2 sm:space-x-4">
             {/* Language Toggle */}
-            <div className="bg-[#1e0338] p-1 rounded-xl flex items-center border border-purple-800/80 text-xs font-semibold shadow-inner">
+            <div 
+              role="group" 
+              aria-label={currentLang === 'my' ? 'ဘာသာစကား ရွေးချယ်ရန်' : 'Language Selector'}
+              className="bg-[#1e0338] p-1 rounded-xl flex items-center border border-purple-800/80 text-xs font-semibold shadow-inner"
+            >
               <button
+                type="button"
                 onClick={() => onSetLanguage('my')}
-                className={`px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center space-x-1.5 ${
+                aria-pressed={currentLang === 'my'}
+                aria-label="Switch to Myanmar language"
+                className={`px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center space-x-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                   currentLang === 'my'
                     ? 'bg-amber-400 text-purple-950 font-bold shadow-md'
                     : 'text-purple-300 hover:text-white'
                 }`}
               >
-                <span>🇲🇲</span>
+                <span aria-hidden="true">🇲🇲</span>
                 <span>မြန်မာ</span>
               </button>
               <button
+                type="button"
                 onClick={() => onSetLanguage('en')}
-                className={`px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center space-x-1.5 ${
+                aria-pressed={currentLang === 'en'}
+                aria-label="Switch to English language"
+                className={`px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center space-x-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                   currentLang === 'en'
                     ? 'bg-amber-400 text-purple-950 font-bold shadow-md'
                     : 'text-purple-300 hover:text-white'
                 }`}
               >
-                <span>🇬🇧</span>
+                <span aria-hidden="true">🇬🇧</span>
                 <span>English</span>
               </button>
             </div>
@@ -126,22 +146,47 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Navigation Tabs Bar */}
-      <div className="bg-[#1e0338]/90 backdrop-blur border-t border-purple-900/80 overflow-x-auto scrollbar-none">
-        <div className="max-w-7xl mx-auto px-4 flex space-x-2 sm:space-x-6 text-xs sm:text-sm font-medium whitespace-nowrap py-1">
+      <nav 
+        aria-label={currentLang === 'my' ? 'ပင်မ အညွှန်း' : 'Main Navigation'} 
+        className="bg-[#1e0338]/90 backdrop-blur border-t border-purple-900/80 overflow-x-auto scrollbar-none"
+      >
+        <div 
+          role="tablist" 
+          aria-label={currentLang === 'my' ? 'သင်တန်း ကဏ္ဍများ' : 'Course Sections'}
+          className="max-w-7xl mx-auto px-4 flex space-x-2 sm:space-x-6 text-xs sm:text-sm font-medium whitespace-nowrap py-1"
+        >
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
+                id={`tab-${tab.id}`}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`tabpanel-${tab.id}`}
+                tabIndex={isActive ? 0 : -1}
                 onClick={() => onSelectTab(tab.id)}
-                className={`relative py-3 px-3 sm:px-4 flex items-center space-x-2 transition-colors rounded-lg ${
+                onKeyDown={(e) => {
+                  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    const currentIndex = tabs.findIndex(t => t.id === tab.id);
+                    const nextIndex = e.key === 'ArrowRight'
+                      ? (currentIndex + 1) % tabs.length
+                      : (currentIndex - 1 + tabs.length) % tabs.length;
+                    onSelectTab(tabs[nextIndex].id);
+                    const nextTabEl = document.getElementById(`tab-${tabs[nextIndex].id}`);
+                    nextTabEl?.focus();
+                  }
+                }}
+                className={`relative py-3 px-3 sm:px-4 flex items-center space-x-2 transition-colors rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                   isActive
                     ? 'text-amber-300 font-bold'
                     : 'text-purple-300 hover:text-amber-200 hover:bg-purple-900/30'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-amber-400' : 'text-purple-400'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-amber-400' : 'text-purple-400'}`} aria-hidden="true" />
                 <span>{currentLang === 'my' ? tab.labelMy : tab.labelEn}</span>
                 {isActive && (
                   <motion.div
@@ -154,7 +199,7 @@ export const Header: React.FC<HeaderProps> = ({
             );
           })}
         </div>
-      </div>
+      </nav>
     </header>
   );
 };
